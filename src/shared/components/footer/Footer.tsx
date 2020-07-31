@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react'
-import Container from '../container/Container'
+import React, { ReactElement } from 'react';
+import Container from '../container/Container';
 
 export default function Footer(): ReactElement {
   return (
@@ -8,5 +8,5 @@ export default function Footer(): ReactElement {
         <span className="text-sm">React Folders Styleguide App 2020</span>
       </Container>
     </footer>
-  )
+  );
 }

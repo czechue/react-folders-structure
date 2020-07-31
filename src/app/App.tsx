@@ -1,9 +1,9 @@
-import React from 'react'
-import Header from '../shared/components/header/Header'
-import Container from '../shared/components/container/Container'
-import Footer from '../shared/components/footer/Footer'
+import React from 'react';
+import Header from '../shared/components/header/Header';
+import Container from '../shared/components/container/Container';
+import Footer from '../shared/components/footer/Footer';
 
-function App() {
+export default function App() {
   return (
     <div>
       <Header />
@@ -12,7 +12,5 @@ function App() {
       </Container>
       <Footer />
     </div>
-  )
+  );
 }
-
-export default App

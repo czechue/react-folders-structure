@@ -1,9 +1,9 @@
-import React, {ReactElement} from 'react'
+import React, { ReactElement } from 'react';
 
 interface ContainerProps {
-  children: ReactElement | ReactElement[]
+  children: ReactElement | ReactElement[];
 }
 
-export default function Container({children}: ContainerProps): ReactElement {
-  return <div className="container mx-auto">{children}</div>
+export default function Container({ children }: ContainerProps): ReactElement {
+  return <div className="container mx-auto">{children}</div>;
 }

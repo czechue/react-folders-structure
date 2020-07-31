@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react'
-import Container from '../container/Container'
+import React, { ReactElement } from 'react';
+import Container from '../container/Container';
 
 export default function Header(): ReactElement {
   return (
@@ -9,5 +9,5 @@ export default function Header(): ReactElement {
         <div className="bg-green-200">Test</div>
       </Container>
     </header>
-  )
+  );
 }
