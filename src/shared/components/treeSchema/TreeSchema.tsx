@@ -3,47 +3,32 @@ import { Treebeard, TreeNode } from 'react-treebeard';
 
 interface TreeSchemaProps {}
 
-const tree: TreeNode = {
-  name: 'root',
+const data: TreeNode = {
+  name: 'src',
   toggled: true,
   children: [
     {
-      name: 'parent',
-      children: [{ name: 'child1' }, { name: 'child2' }],
-    },
-    {
-      name: 'loading parent',
-      loading: true,
-      children: [],
-    },
-    {
-      name: 'parent',
+      name: 'app',
+      toggled: true,
+      active: true,
       children: [
-        {
-          name: 'nested parent',
-          children: [{ name: 'nested child 1' }, { name: 'nested child 2' }],
-        },
+        { name: 'admin', toggled: true, active: false, children: [{ name: 'Admin.tsx' }] },
+        { name: 'course', toggled: true, active: true, children: [{ name: 'Course.tsx' }] },
+        { name: 'home', toggled: true, active: false, children: [{ name: 'Home.tsx' }] },
+        { name: 'App.tsx', active: false },
+        { name: 'App.test.tsx', active: false },
       ],
+    },
+    {
+      name: 'shared',
+      children: [{ name: 'components' }, { name: 'api' }, { name: 'utils' }],
+    },
+    {
+      name: 'index.tsx',
     },
   ],
 };
 
 export default function TreeSchema(): ReactElement {
-  const [data, setData] = useState<TreeNode | TreeNode[]>(tree);
-  // const [cursor, setCursor] = useState(false);
-
-  const onToggle = (node: TreeNode, toggled: any) => {
-    console.log(node);
-    // if (cursor) {
-    //   node.active = false;
-    // }
-    node.active = true;
-    if (node.children) {
-      node.toggled = toggled;
-    }
-    // setCursor(node);
-    setData(Object.assign({}, data));
-  };
-
-  return <Treebeard data={data} onToggle={onToggle} />;
+  return <Treebeard data={data} />;
 }
