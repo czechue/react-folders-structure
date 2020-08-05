@@ -1,34 +1,35 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Treebeard, TreeNode } from 'react-treebeard';
+import { useTreeState, useTreeDispatch } from '../../store/tree/TreeContext';
+import { useLocation } from 'react-router-dom';
 
-interface TreeSchemaProps {}
-
-const data: TreeNode = {
-  name: 'src',
-  toggled: true,
-  children: [
-    {
-      name: 'app',
-      toggled: true,
-      active: true,
-      children: [
-        { name: 'admin', toggled: true, active: false, children: [{ name: 'Admin.tsx' }] },
-        { name: 'course', toggled: true, active: true, children: [{ name: 'Course.tsx' }] },
-        { name: 'home', toggled: true, active: false, children: [{ name: 'Home.tsx' }] },
-        { name: 'App.tsx', active: false },
-        { name: 'App.test.tsx', active: false },
-      ],
-    },
-    {
-      name: 'shared',
-      children: [{ name: 'components' }, { name: 'api' }, { name: 'utils' }],
-    },
-    {
-      name: 'index.tsx',
-    },
-  ],
-};
+interface TreeSchemaProps {
+  data: TreeNode;
+}
 
 export default function TreeSchema(): ReactElement {
-  return <Treebeard data={data} />;
+  const { pathname } = useLocation();
+  const state = useTreeState();
+  const { toggleOn, resetTree } = useTreeDispatch();
+
+  useEffect(() => {
+    resetTree();
+
+    if (pathname === '/admin') {
+      toggleOn(['src', 'app', 'admin', 'shared']);
+      return;
+    }
+
+    if (pathname === '/course') {
+      toggleOn(['src', 'app', 'course', 'shared']);
+      return;
+    }
+
+    if (pathname === '/') {
+      toggleOn(['src', 'app', 'home', 'shared']);
+      return;
+    }
+  }, [toggleOn, resetTree, pathname]);
+
+  return <Treebeard data={state} />;
 }
