@@ -5,31 +5,31 @@ import tree from '../consts/appFolderTree';
 import Header from '../shared/components/header/Header';
 import Container from '../shared/components/container/Container';
 import Footer from '../shared/components/footer/Footer';
-import TreeSchema from '../shared/components/treeSchema/TreeSchema';
-import { TreeProvider } from '../shared/store/tree/TreeContext';
+
+import { TreeProvider } from '../shared/tree/TreeContext';
 
 import Home from './components/home/Home';
 import Admin from './components/admin/Admin';
 import Course from './components/course/Course';
+import { Routes } from '../consts/routes';
 
 export default function App() {
   return (
     <Router>
       <Header />
       <Container>
-        <TreeProvider initTree={tree}>
+        <TreeProvider tree={tree}>
           <Switch>
-            <Route path="/admin">
+            <Route path={Routes.Admin}>
               <Admin />
             </Route>
-            <Route path="/course">
+            <Route path={Routes.Course}>
               <Course />
             </Route>
-            <Route path="/">
+            <Route path={Routes.Home}>
               <Home />
             </Route>
           </Switch>
-          <TreeSchema />
         </TreeProvider>
       </Container>
       <Footer />

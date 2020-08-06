@@ -1,6 +1,6 @@
 import { TreeNode } from 'react-treebeard';
 
-const tree: TreeNode = {
+const data: TreeNode = {
   name: 'src',
   id: 'src',
   toggled: false,
@@ -50,6 +50,24 @@ const tree: TreeNode = {
       active: false,
     },
   ],
+};
+
+export type TreeInitConfig = Record<string, Array<string>>;
+
+const init: TreeInitConfig = {
+  '/admin': ['src', 'app', 'admin', 'shared'],
+  '/course': ['src', 'app', 'course', 'shared'],
+  '/': ['src', 'app', 'home', 'shared'],
+};
+
+export type Tree = {
+  data: TreeNode;
+  init: TreeInitConfig;
+};
+
+const tree: Tree = {
+  data,
+  init,
 };
 
 export default tree;

@@ -1,10 +1,12 @@
 import React, { ReactNode, createContext, useReducer, useContext, useCallback } from 'react';
 import { TreeNode } from 'react-treebeard';
 import treeReducer from './treeReducer/treeReducer';
+import TreeSchema from './treeSchema/TreeSchema';
+import { Tree } from '../../consts/appFolderTree';
 
 interface TreeProviderProps {
   children: ReactNode;
-  initTree: TreeNode;
+  tree: Tree;
 }
 
 type Dispatch = {
@@ -15,12 +17,12 @@ type Dispatch = {
 const TreeStateContext = createContext<undefined | TreeNode>(undefined);
 const TreeDispatchContext = createContext<undefined | Dispatch>(undefined);
 
-function TreeProvider({ children, initTree }: TreeProviderProps) {
-  const [state, dispatch] = useReducer(treeReducer, initTree);
+function TreeProvider({ children, tree: { data, init } }: TreeProviderProps) {
+  const [state, dispatch] = useReducer(treeReducer, data);
 
   const resetTree = useCallback(() => {
-    dispatch({ type: 'reset', payload: initTree });
-  }, [initTree]);
+    dispatch({ type: 'reset', payload: data });
+  }, [data]);
 
   const toggleOn = useCallback((toToggleList: Array<string>) => {
     dispatch({ type: 'toggleOn', payload: toToggleList });
@@ -28,7 +30,10 @@ function TreeProvider({ children, initTree }: TreeProviderProps) {
 
   return (
     <TreeDispatchContext.Provider value={{ resetTree, toggleOn }}>
-      <TreeStateContext.Provider value={state}>{children}</TreeStateContext.Provider>
+      <TreeStateContext.Provider value={state}>
+        <TreeSchema initConfig={init} />
+        {children}
+      </TreeStateContext.Provider>
     </TreeDispatchContext.Provider>
   );
 }
@@ -40,6 +45,7 @@ function useTreeState(): TreeNode {
   }
   return context;
 }
+
 function useTreeDispatch() {
   const context = React.useContext(TreeDispatchContext);
   if (context === undefined) {
@@ -47,4 +53,9 @@ function useTreeDispatch() {
   }
   return context;
 }
-export { TreeProvider, useTreeState, useTreeDispatch };
+
+function useTree(): [TreeNode, Dispatch] {
+  return [useTreeState(), useTreeDispatch()];
+}
+
+export { TreeProvider, useTreeState, useTreeDispatch, useTree };
